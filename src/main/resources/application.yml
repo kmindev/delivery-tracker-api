@@ -1,0 +1,3 @@
+delivery-tracker:
+  client-id: ${DELIVERY_TRACKER_CLIENT_ID}
+  client-secret: ${DELIVERY_TRACKER_CLIENT_SECRET}
