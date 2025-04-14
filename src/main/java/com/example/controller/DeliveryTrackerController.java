@@ -17,7 +17,7 @@ public class DeliveryTrackerController {
     private final DeliveryTrackerService deliveryTrackerService;
 
     @GetMapping("/carriers")
-    public DeliveryTrackerCarriersResponse getCarriers(@RequestParam String searchText) throws JsonProcessingException {
+    public DeliveryTrackerCarriersResponse getCarriers(@RequestParam String searchText) {
         return deliveryTrackerService.searchCarriers(searchText);
     }
 
