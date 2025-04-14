@@ -23,10 +23,10 @@ public class RestClientConfig {
     @Bean
     public RestClient restClient() {
         HttpClient httpClient = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(5))
+                .connectTimeout(Duration.ofSeconds(15))
                 .build();
         JdkClientHttpRequestFactory requestFactory = new JdkClientHttpRequestFactory(httpClient);
-        requestFactory.setReadTimeout(Duration.ofSeconds(5));
+        requestFactory.setReadTimeout(Duration.ofSeconds(15));
         return RestClient.builder()
                 .baseUrl("https://apis.tracker.delivery/graphql")
                 .requestFactory(requestFactory)
