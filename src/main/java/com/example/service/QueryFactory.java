@@ -67,4 +67,40 @@ public class QueryFactory {
                 }
                 """;
     }
+
+    public static String allEventsQuery() {
+        return """
+                query Track(
+                   $carrierId: ID!,
+                   $trackingNumber: String!
+                 ) {
+                   track(
+                     carrierId: $carrierId,
+                     trackingNumber: $trackingNumber
+                   ) {
+                     lastEvent {
+                       time
+                       status {
+                         code
+                         name
+                       }
+                       description
+                     }
+                     events(last: 10) {
+                       edges {
+                         node {
+                           time
+                           status {
+                             code
+                             name
+                           }
+                           description
+                         }
+                       }
+                     }
+                   }
+                 }
+                """;
+    }
+
 }

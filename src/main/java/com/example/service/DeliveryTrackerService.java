@@ -40,5 +40,18 @@ public class DeliveryTrackerService {
                 .body(DeliveryTrackerTrackResponse.class);
     }
 
+    public DeliveryTrackerTrackResponse getAllEvents(Company company, String trackingNumber) {
+        String query = QueryFactory.allEventsQuery();
+        Map<String, Object> variables = Map.of(
+                "carrierId", company.getId(),
+                "trackingNumber", trackingNumber
+        );
+        DeliveryTrackerRequest requestBody = new DeliveryTrackerRequest(query, variables);
+        return restClient.post()
+                .body(requestBody)
+                .retrieve()
+                .body(DeliveryTrackerTrackResponse.class);
+    }
+
 }
 

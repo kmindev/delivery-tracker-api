@@ -30,4 +30,12 @@ public class DeliveryTrackerController {
         return deliveryTrackerService.getLastEvent(company, trackingNumber);
     }
 
+    @GetMapping("/all-events")
+    public DeliveryTrackerTrackResponse getAllEvents(
+            @RequestParam Company company,
+            @RequestParam String trackingNumber
+    ) {
+        return deliveryTrackerService.getAllEvents(company, trackingNumber);
+    }
+
 }
