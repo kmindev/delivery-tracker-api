@@ -1,6 +1,6 @@
-package com.example.dto.delivery_tracker.request.converter;
+package com.example.controller.converter;
 
-import com.example.Company;
+import com.example.domain.constant.Company;
 import org.springframework.core.convert.converter.Converter;
 
 public class CompanyRequestConverter implements Converter<String, Company> {

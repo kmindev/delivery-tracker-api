@@ -1,6 +1,6 @@
 package com.example.config;
 
-import com.example.dto.delivery_tracker.request.converter.CompanyRequestConverter;
+import com.example.controller.converter.CompanyRequestConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

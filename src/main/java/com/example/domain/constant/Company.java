@@ -1,4 +1,4 @@
-package com.example;
+package com.example.domain.constant;
 
 import java.util.Arrays;
 import lombok.Getter;
