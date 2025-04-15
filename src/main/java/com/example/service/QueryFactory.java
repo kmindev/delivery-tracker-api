@@ -103,4 +103,14 @@ public class QueryFactory {
                 """;
     }
 
+    public static String webhookRegisterQuery() {
+        return """
+                mutation RegisterTrackWebhook(
+                    $input: RegisterTrackWebhookInput!
+                  ) {
+                    registerTrackWebhook(input: $input)
+                  }
+                """;
+    }
+
 }

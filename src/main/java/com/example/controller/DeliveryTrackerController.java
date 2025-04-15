@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.domain.constant.Company;
 import com.example.dto.delivery_tracker.response.DeliveryTrackerCarriersResponse;
 import com.example.dto.delivery_tracker.response.DeliveryTrackerTrackResponse;
+import com.example.dto.delivery_tracker.response.DeliveryWebhookRegisterResponse;
 import com.example.service.DeliveryTrackerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,14 @@ public class DeliveryTrackerController {
             @RequestParam String trackingNumber
     ) {
         return deliveryTrackerService.getAllEvents(company, trackingNumber);
+    }
+
+    @GetMapping("/register")
+    public DeliveryWebhookRegisterResponse register(
+            @RequestParam Company company,
+            @RequestParam String trackingNumber
+    ) {
+        return deliveryTrackerService.register(company, trackingNumber);
     }
 
 }
