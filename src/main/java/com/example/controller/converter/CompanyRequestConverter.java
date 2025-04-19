@@ -7,7 +7,7 @@ public class CompanyRequestConverter implements Converter<String, Company> {
 
     @Override
     public Company convert(String source) {
-        return Company.from(source);
+        return Company.fromName(source);
     }
 
 }

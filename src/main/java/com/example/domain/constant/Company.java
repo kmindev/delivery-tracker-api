@@ -20,11 +20,18 @@ public enum Company {
         this.name = name;
     }
 
-    public static Company from(String name) {
+    public static Company fromName(String name) {
         return Arrays.stream(Company.values())
                 .filter(company -> company.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 이름의 회사를 찾을 수 없습니다: " + name));
+    }
+
+    public static Company fromId(String id) {
+        return Arrays.stream(Company.values())
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 이름의 회사를 찾을 수 없습니다: " + id));
     }
 
 }
