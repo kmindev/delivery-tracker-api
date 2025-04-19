@@ -6,8 +6,10 @@ import com.example.dto.delivery_tracker.response.DeliveryTrackerCarriersResponse
 import com.example.dto.delivery_tracker.response.DeliveryTrackerTrackResponse;
 import com.example.dto.delivery_tracker.response.DeliveryWebhookRegisterResponse;
 import com.example.service.DeliveryTrackerService;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Queue;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,46 +19,70 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/delivery-tracker")
 @RestController
-public class DeliveryTrackerController {
+public class DeliveryTrackerController extends BaseController {
 
     private final DeliveryTrackerService deliveryTrackerService;
     private final Queue<DeliveryTrackerCallbackRequest> deliveryCallbackQueue;
 
     @GetMapping("/carriers")
-    public DeliveryTrackerCarriersResponse getCarriers(@RequestParam String searchText) {
-        return deliveryTrackerService.searchCarriers(searchText);
+    public ResponseEntity<DeliveryTrackerCarriersResponse> getCarriers(
+            @RequestParam String searchText,
+            HttpServletRequest httpServletRequest
+    ) {
+        requestLog(log, httpServletRequest, searchText);
+        DeliveryTrackerCarriersResponse response = deliveryTrackerService.searchCarriers(searchText);
+        responseLog(log, httpServletRequest, response);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/last-event")
-    public DeliveryTrackerTrackResponse getLastEvent(
+    public ResponseEntity<DeliveryTrackerTrackResponse> getLastEvent(
             @RequestParam Company company,
-            @RequestParam String trackingNumber
+            @RequestParam String trackingNumber,
+            HttpServletRequest httpServletRequest
     ) {
-        return deliveryTrackerService.getLastEvent(company, trackingNumber);
+        requestLog(log, httpServletRequest);
+        DeliveryTrackerTrackResponse response = deliveryTrackerService.getLastEvent(company, trackingNumber);
+        responseLog(log, httpServletRequest, response);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all-events")
-    public DeliveryTrackerTrackResponse getAllEvents(
+    public ResponseEntity<DeliveryTrackerTrackResponse> getAllEvents(
             @RequestParam Company company,
-            @RequestParam String trackingNumber
+            @RequestParam String trackingNumber,
+            HttpServletRequest httpServletRequest
     ) {
-        return deliveryTrackerService.getAllEvents(company, trackingNumber);
+        requestLog(log, httpServletRequest);
+        DeliveryTrackerTrackResponse response = deliveryTrackerService.getAllEvents(company, trackingNumber);
+        responseLog(log, httpServletRequest, response);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/register")
-    public DeliveryWebhookRegisterResponse register(
+    public ResponseEntity<DeliveryWebhookRegisterResponse> register(
             @RequestParam Company company,
-            @RequestParam String trackingNumber
+            @RequestParam String trackingNumber,
+            HttpServletRequest httpServletRequest
     ) {
-        return deliveryTrackerService.register(company, trackingNumber);
+        requestLog(log, httpServletRequest);
+        DeliveryWebhookRegisterResponse response = deliveryTrackerService.register(company, trackingNumber);
+        responseLog(log, httpServletRequest, response);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/callback")
-    public ResponseEntity<Void> callback(@RequestBody DeliveryTrackerCallbackRequest request) {
+    public ResponseEntity<Void> callback(
+            @RequestBody DeliveryTrackerCallbackRequest request,
+            HttpServletRequest httpServletRequest
+    ) {
+        requestLog(log, httpServletRequest, request);
         deliveryCallbackQueue.offer(request);
+        responseLog(log, httpServletRequest);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
