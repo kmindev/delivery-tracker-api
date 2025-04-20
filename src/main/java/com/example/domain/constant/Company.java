@@ -10,6 +10,9 @@ public enum Company {
     CJ("kr.cjlogistics", "CJ대한통운"),
     COUPANG("kr.coupangls", "쿠팡 로지스틱스 서비스"),
     CU("kr.cupost", "CU 편의점택배"),
+    HANGIN("kr.hanjin", "한진택배"),
+    GS("kr.cvsnet", "GS"),
+    LOGEN("kr.logen", "로젠택배"),
     CHUNIL("kr.chunilps", "천일택배");
 
     private final String id;
