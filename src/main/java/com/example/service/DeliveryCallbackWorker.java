@@ -21,12 +21,12 @@ public class DeliveryCallbackWorker {
     public void processQueue() {
         while (!deliveryCallbackQueue.isEmpty()) {
             DeliveryTrackerCallbackRequest request = deliveryCallbackQueue.poll();
-            DeliveryTrackerTrackResponse allEvents = deliveryTrackerService.getAllEvents(
-                    Company.fromId(request.carrierId()), request.trackingNumber()
-            );
+            Company company = Company.fromId(request.carrierId());
+            String trackingNumber = request.trackingNumber();
+            DeliveryTrackerTrackResponse allEvents = deliveryTrackerService.getAllEvents(company, trackingNumber);
 
             // TODO: 배송 상태 DB 업데이트
-            log.info("배송 상태 업데이트\r\n{}\n{}", request, allEvents);
+            log.info("배송 상태 업데이트: {}/{}\n{}", company, trackingNumber, allEvents);
         }
     }
 

@@ -2,3 +2,11 @@ delivery-tracker:
   client-id: ${DELIVERY_TRACKER_CLIENT_ID}
   client-secret: ${DELIVERY_TRACKER_CLIENT_SECRET}
   call-back-url: ${DELIVERY_TRACKER_CALLBACK_URL}
+logging:
+  level:
+    root: info
+  file:
+    name: logs/delivery-tracker.log  # logs/ 하위에 로그 파일 생성
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
