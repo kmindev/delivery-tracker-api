@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.domain.constant.Company;
+import com.example.dto.DeliveryStatus;
 import com.example.dto.delivery_tracker.request.DeliveryTrackerCallbackRequest;
 import com.example.dto.delivery_tracker.response.DeliveryTrackerCarriersResponse;
 import com.example.dto.delivery_tracker.response.DeliveryTrackerTrackResponse;
@@ -40,25 +41,25 @@ public class DeliveryTrackerController extends BaseController {
     }
 
     @GetMapping("/last-event")
-    public ResponseEntity<DeliveryTrackerTrackResponse> getLastEvent(
+    public ResponseEntity<DeliveryStatus> getLastEvent(
             @RequestParam Company company,
             @RequestParam String trackingNumber,
             HttpServletRequest httpServletRequest
     ) {
         requestLog(log, httpServletRequest);
-        DeliveryTrackerTrackResponse response = deliveryTrackerService.getLastEvent(company, trackingNumber);
+        DeliveryStatus response = deliveryTrackerService.getLastEvent(company, trackingNumber);
         responseLog(log, httpServletRequest, response);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all-events")
-    public ResponseEntity<DeliveryTrackerTrackResponse> getAllEvents(
+    public ResponseEntity<DeliveryStatus> getAllEvents(
             @RequestParam Company company,
             @RequestParam String trackingNumber,
             HttpServletRequest httpServletRequest
     ) {
         requestLog(log, httpServletRequest);
-        DeliveryTrackerTrackResponse response = deliveryTrackerService.getAllEvents(company, trackingNumber);
+        DeliveryStatus response = deliveryTrackerService.getAllEvents(company, trackingNumber);
         responseLog(log, httpServletRequest, response);
         return ResponseEntity.ok(response);
     }

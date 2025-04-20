@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.domain.constant.Company;
+import com.example.dto.DeliveryStatus;
 import com.example.dto.delivery_tracker.request.DeliveryTrackerRequest;
 import com.example.dto.delivery_tracker.response.DeliveryTrackerCarriersResponse;
 import com.example.dto.delivery_tracker.response.DeliveryTrackerTrackResponse;
@@ -9,6 +10,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,30 +37,32 @@ public class DeliveryTrackerService {
                 .body(DeliveryTrackerCarriersResponse.class);
     }
 
-    public DeliveryTrackerTrackResponse getLastEvent(Company company, String trackingNumber) {
+    public DeliveryStatus getLastEvent(Company company, String trackingNumber) {
         String query = QueryFactory.lastEventQuery();
         Map<String, Object> variables = Map.of(
                 "carrierId", company.getId(),
                 "trackingNumber", trackingNumber
         );
         DeliveryTrackerRequest requestBody = new DeliveryTrackerRequest(query, variables);
-        return restClient.post()
+        DeliveryTrackerTrackResponse response = restClient.post()
                 .body(requestBody)
                 .retrieve()
                 .body(DeliveryTrackerTrackResponse.class);
+        return Objects.requireNonNull(response).of(company, trackingNumber);
     }
 
-    public DeliveryTrackerTrackResponse getAllEvents(Company company, String trackingNumber) {
+    public DeliveryStatus getAllEvents(Company company, String trackingNumber) {
         String query = QueryFactory.allEventsQuery();
         Map<String, Object> variables = Map.of(
                 "carrierId", company.getId(),
                 "trackingNumber", trackingNumber
         );
         DeliveryTrackerRequest requestBody = new DeliveryTrackerRequest(query, variables);
-        return restClient.post()
+        DeliveryTrackerTrackResponse response = restClient.post()
                 .body(requestBody)
                 .retrieve()
                 .body(DeliveryTrackerTrackResponse.class);
+        return Objects.requireNonNull(response).of(company, trackingNumber);
     }
 
     public DeliveryWebhookRegisterResponse register(Company company, String trackingNumber) {
