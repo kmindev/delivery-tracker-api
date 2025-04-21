@@ -1,5 +1,7 @@
 package com.example.dto.delivery_tracker.response;
 
+import static com.example.utils.TimeUtils.toLocalDateTime;
+
 import com.example.domain.constant.Company;
 import com.example.dto.DeliveryStatus;
 import java.time.ZonedDateTime;
@@ -43,7 +45,7 @@ public record DeliveryTrackerTrackResponse(List<Error> errors, Data data) {
                                 .code(code())
                                 .name(name())
                                 .description(description())
-                                .time(Optional.ofNullable(time()).map(ZonedDateTime::toLocalDateTime).orElse(null))
+                                .time(toLocalDateTime(time()))
                                 .build();
                     }
                 }
@@ -126,7 +128,7 @@ public record DeliveryTrackerTrackResponse(List<Error> errors, Data data) {
                 .code(lastEventCode())
                 .name(lastEventName())
                 .description(lastEventDescription())
-                .time(Optional.ofNullable(lastEventTime()).map(ZonedDateTime::toLocalDateTime).orElse(null))
+                .time(toLocalDateTime(lastEventTime()))
                 .build();
 
         List<DeliveryStatus.Event> events = edges().stream()
